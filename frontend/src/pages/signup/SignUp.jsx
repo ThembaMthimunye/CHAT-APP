@@ -6,7 +6,7 @@ const SignUp = () => {
     <div className=" text-gray-700  flex flex-col items0centre justify-center min-w-96 mx-auto">
       <div className="isolate aspect-video w-96 rounded-xl bg-white/20 shadow-lg ring-1 ring-black/5 p-4">
         <h1 className="text-3xl  text-center text-gray-200">
-          Sign Up <span className="text-blue-500">ChatApp</span>
+          Sign Up
         </h1>
         <form action="">
           <div>
