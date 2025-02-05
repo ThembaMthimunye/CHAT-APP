@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -8,7 +9,13 @@ const Login = () => {
   const goToSignUp = () => {
     navigate("/signup");
   };
+  const [username,setUsername]=useState("");
+  const [password,setPassword]=useState('');
 
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    await Login(username,password)
+  }
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto text-gray-700 ">
       <div className="isolate aspect-video w-96 rounded-xl bg-white/50 shadow-lg ring-1 ring-black/5 px-4">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast"; 
 import axios from "axios"; // Import axios
 import React from "react";
-import { useAuthContext } from "../../../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const useSignup = () => {
 
     setLoading(true); 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", {
+      const response = await axios.post("/api/auth/signup", {
         fullName,
         username,
         password,
@@ -44,7 +44,9 @@ const useSignup = () => {
       if(response.error){
         throw new Error(response.error);
        
-      }
+      } 
+
+      const data=await response.data
       localStorage.setItem("chat-user",JSON.stringify(data))
       setAuthUser(data)
     } catch (error) {
