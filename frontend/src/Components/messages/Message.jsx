@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Nochat from "../Sidebar/Nochat";
+import useConversation from "../../zustand/useConversation.js";
+
 
 const Message = () => {
   const [nochat, setNochat] = useState(false); // use state to toggle between chat or Nochat
-
+  const {selectedConversation,setSelectedConversation}=useConversation()
   return (
     <div className="w-full h-170">
       <div className="grid pb-11">
-        {nochat === true ? (
+        {selectedConversation ? (
           <div className="flex gap-2.5 mb-4">
             <img
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
@@ -30,7 +32,7 @@ const Message = () => {
                   </h6>
                 </div>
               </div>
-              <div className="w-full pl-3 pr-1 py-1 rounded-3xl border border-gray-200 items-center gap-2 inline-flex justify-between">
+              <div className="w-full pl-3 pr-1 py-1 rounded-3xl border border-gray-200 items-center gap-2 inline-flex justify-between position-end">
                 <div className="flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +51,7 @@ const Message = () => {
                     </g>
                   </svg>
                   <input
-                    className="grow shrink basis-0 text-black text-xs font-medium leading-4 focus:outline-none"
+                    className="grow shrink basis-0 text-black text-xs font-medium leading-4 focus:outline-none w-132 place-items-baseline"
                     placeholder="Type here..."
                   />
                 </div>
