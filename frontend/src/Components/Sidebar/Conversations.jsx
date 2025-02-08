@@ -5,7 +5,7 @@ import { getRandomEmoji } from "../../utils/emogies";
 
 const Conversations = () => {
   const {loading,conversation}=useGetConversation()
-  console.log("Conversations",conversation)
+  // console.log("Conversations",conversation)
   return (
     <div className="px-4 flex flex-col overflow-auto">
       {conversation.map((conversation)=>(
