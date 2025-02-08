@@ -1,26 +1,32 @@
-import React from 'react';
+import React from "react";
 import Message from "./Message";
-import useGetMessages from '../../hooks/useGetMessages';
-import MessageSkeleton from '../../skeletons/MessageSkeletons';
+import useGetMessages from "../../hooks/useGetMessages.js";
+import MessageSkeleton from "../../skeletons/MessageSkeletons";
 
 const Messages = () => {
-  const {  messages = [], loading } = useGetMessages();
+  const { messages, loading } = useGetMessages();  
   console.log("messages", messages);
 
   return (
-    <div className="flex-1 ">
-      
+    <div className="flex-1 flex flex-col justify-start"> 
+     
       {loading ? (
         [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)
       ) : (
         <>
-          
-          {messages.length === 0 ? (
-            <p className="text-center">Send a message to start a conversation</p>
+        
+          {Array.isArray(messages) && messages.length === 0 ? (
+            <p className="text-center text-gray-500 mt-4">
+              Send a message to start a conversation
+            </p>
           ) : (
-            messages.map((message, idx) => (
-              <Message key={idx} message={message} />
-            ))
+            <div className="overflow-auto max-h-[80vh] space-y-2 py-0"> 
+            
+              {Array.isArray(messages) &&
+                messages.map((message) => (
+                  <Message key={message._id} message={message} />
+                ))}
+            </div>
           )}
         </>
       )}

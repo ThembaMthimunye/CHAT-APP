@@ -2,49 +2,51 @@ import { useEffect, useState } from "react";
 import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import React from "react";
-import axios from 'axios';
 
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
-    const fetchMessages = async () => {
+    const getMessages = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/messages/${selectedConversation._id}`);
-        
-        // Check if there's any data
-        if (res.data && res.data.error) {
-          throw new Error(res.data.error);
+   
+        const res = await fetch(`/api/messages/${selectedConversation._id}`);
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch messages. Status: ${res.status}`);
         }
 
-        if (!res.data || Object.keys(res.data).length === 0) {
+        const data = await res.json();
+
+        if (data && data.error) {
+          throw new Error(data.error);
+        }
+
+        if (!data || !Array.isArray(data)) {
           toast.error("No messages found.");
+          setMessages([]);
           return;
         }
 
-        setMessages(res.data);
+        // Set the messages state with the fetched data
+        setMessages(data);
       } catch (error) {
-        // More detailed error handling
-        if (error.response) {
-          // Server responded with an error
-          toast.error(`Error: ${error.response.status} - ${error.response.data.message || error.response.statusText}`);
-        } else {
-          // General error or network issue
-          toast.error(error.message || "An error occurred");
-        }
+        // Handle any errors, including network or server issues
+        toast.error(`Error: ${error.message || "An error occurred"}`);
       } finally {
         setLoading(false);
       }
     };
 
+    // Make sure the selected conversation exists before making the request
     if (selectedConversation?._id) {
-      fetchMessages();
+      getMessages();
     }
   }, [selectedConversation?._id, setMessages]);
 
-  return { messages, loading };
+  return { messages: messages || [], loading };  
 };
 
 export default useGetMessages;

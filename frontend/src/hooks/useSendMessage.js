@@ -9,7 +9,7 @@ const useSendMessage = () => {
     const sendMessage = async (message) => {
         setLoading(true)
         try {
-            // Ensure selectedConversation is valid and has _id
+            
             if (!selectedConversation || !selectedConversation._id) {
                 throw new Error('No valid conversation selected.')
             }
@@ -24,13 +24,13 @@ const useSendMessage = () => {
 
             const data = await res.json()
 
-            // Correct error handling (fixing typo)
+    
             if (data.error) {
                 throw new Error(data.error)
             }
 
-            // Assuming `data` returned contains the new message or conversation data
-            setMessages(prevMessages => [...prevMessages, data]) // Update with the new message(s)
+            
+            setMessages(prevMessages => [...prevMessages, data]) 
         } catch (error) {
             toast.error(error.message)
         } finally {
