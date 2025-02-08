@@ -1,12 +1,13 @@
 import React from "react";
 import useConversation from "../../zustand/useConversation.js";
 import {useEffect} from 'react'
+import { useSocketContext } from "../../context/SocketContext.jsx";
 
 const Conversation = ({ conversation, emoji }) => {
   // const [selectedConversation, setSelectedConversation] = useConversation();
   const {selectedConversation, setSelectedConversation} = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
-
+  const {onlineUsers}=useSocketContext();
   useEffect(()=>{
     return ()=>setSelectedConversation(null)
   },[setSelectedConversation])
