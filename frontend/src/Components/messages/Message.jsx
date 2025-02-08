@@ -4,11 +4,13 @@ import useConversation from "../../zustand/useConversation.js";
 import useSendMessage from "../../hooks/useSendMessage.js";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import { BsSend } from "react-icons/bs";
+import { extractTime } from "../../utils/extractTime.js";
 
 const Message = ({ message }) => {
   const { selectedConversation } = useConversation();
   const { sendMessage } = useSendMessage(); // Use hook's sendMessage
   const { authUser } = useAuthContext();
+  const formatedTime=extractTime(message.createdAt)
   const [messageText, setMessageText] = useState("");
 
   if (!message || !message.senderId) {
@@ -42,7 +44,7 @@ const Message = ({ message }) => {
         {selectedConversation ? (
           <div className="flex gap-2.5 mb-4">
             <img
-              src={profilePic || "https://via.placeholder.com/40"}  // fallback if no profilePic
+              src={profilePic || "https://via.placeholder.com/40"} 
               alt="Profile image"
               className="w-10 h-10 rounded-full"
             />
@@ -53,12 +55,12 @@ const Message = ({ message }) => {
               <div className="w-max grid">
                 <div className={`${bubbleBgColor} px-3.5 py-2 rounded-lg`}>
                   <h5 className="text-gray-100 text-sm font-normal leading-snug">
-                    {message?.message || "No message content"} {/* Display the message */}
+                    {message?.message || "No message content"} 
                   </h5>
                 </div>
                 <div className="justify-end items-center inline-flex mb-2.5">
                   <h6 className="text-gray-500 text-xs font-normal leading-4 py-1">
-                    {new Date(message.timestamp).toLocaleTimeString()} {/* Dynamically render the timestamp */}
+                    {formatedTime} 
                   </h6>
                 </div>
               </div>
