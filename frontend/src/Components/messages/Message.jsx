@@ -12,6 +12,7 @@ const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   const formatedTime=extractTime(message.createdAt)
   const [messageText, setMessageText] = useState("");
+  const shakeClass=message.shouldShake?"shake":"";
 
   if (!message || !message.senderId) {
     return null; // Prevent errors if message is undefined or missing required fields
@@ -53,9 +54,9 @@ const Message = ({ message }) => {
                 {selectedConversation?.name || "Unknown User"}
               </h5>
               <div className="w-max grid">
-                <div className={`${bubbleBgColor} px-3.5 py-2 rounded-lg`}>
+                <div className={`${bubbleBgColor} ${shakeClass} px-3.5 py-2 rounded-lg`}>
                   <h5 className="text-gray-100 text-sm font-normal leading-snug">
-                    {message?.message || "No message content"} 
+                    {message.message || "No message content"} 
                   </h5>
                 </div>
                 <div className="justify-end items-center inline-flex mb-2.5">
